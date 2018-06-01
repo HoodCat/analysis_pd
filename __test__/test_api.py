@@ -1,5 +1,6 @@
 import collection.api as pdapi
 
+
 # test for pd_gen_url
 def test_pd_gen_url():
     url = pdapi.pd_gen_url(
@@ -20,9 +21,14 @@ def test_pd_fetch_tourspot_visitor():
     for items in pdapi.pd_fetch_tourspot_visitor(district1='서울특별시', year=2012, month=7):
         print(items)
 
+
 # test for pd_fetch_foreign_visitor
+def test_pd_fetch_foreign_visigtor():
+    item = pdapi.pd_fetch_foreign_visitor(112, 2012, 7)
+    print(item)
 
 
 if __name__ == '__main__':
     # test_pd_gen_url()
-    test_pd_fetch_tourspot_visitor()
+    # test_pd_fetch_tourspot_visitor()
+    test_pd_fetch_foreign_visigtor()

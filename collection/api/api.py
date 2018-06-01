@@ -10,8 +10,17 @@ def pd_gen_url(
     return '%s?serviceKey=%s&%s' % (endpoint, service_key, urlencode(params))
 
 
-def pd_fetch_foreign_visitor(country_code=0, year=0, month=0, service_key=''):
-    pass
+def pd_fetch_foreign_visitor(country_code=0, year=0, month=0):
+    gen_url = pd_gen_url(endpoint='http://openapi.tour.go.kr/openapi/service/EdrcntTourismStatsService/getEdrcntTourismStatsList',
+                         YM='{0:04d}{1:02d}'.format(year, month),
+                         NAT_CD=country_code,
+                         _type='json',
+                         ED_CD='E')
+
+    json_response = json_request(gen_url)
+
+    return json_response['response']['body']['items']['item'] \
+        if json_response['response']['header']['resultCode'] == '0000' else dict()
 
 
 def pd_fetch_tourspot_visitor(
@@ -28,13 +37,13 @@ def pd_fetch_tourspot_visitor(
         RES_NM=tourspot,
         _type='json')
     json_response = json_request(gen_url)
-    result_msg = json_response\
+    result_code = json_response\
         .get('response')\
         .get('header')\
-        .get('resultMsg')
+        .get('resultCode')
 
     return json_response\
         .get('response')\
         .get('body')\
         .get('items')\
-        .get('item') if result_msg == 'OK' else []
+        .get('item') if result_code == '0000' else []
