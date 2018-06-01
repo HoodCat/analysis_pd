@@ -6,7 +6,8 @@ RESULT_DIRECTORY = '__results__/crawling'
 
 def preprocess_tourspot_visitor(item):
     result = dict()
-    result['disticnt'] = item.get('sido')
+    result['restrict1'] = item.get('sido')
+    result['restrict2'] = item.get('gungu')
     result['tourist_spot'] = item.get('resNm')
     result['date'] = item.get('ym')
     result['count_foreigner'] = item.get('csForCnt')
@@ -17,7 +18,7 @@ def preprocess_tourspot_visitor(item):
 def preprocess_foreign_visitor(data):
     result = dict()
     result['country_code'] = data['natCd']
-    result['country_name'] = str(data['natKorNm']) # 공백제거
+    result['country_name'] = data['natKorNm'].replace(' ', '')
     result['data'] = data['ym']
     result['visit_count'] = data['num']
 
